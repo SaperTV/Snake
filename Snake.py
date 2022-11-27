@@ -90,38 +90,37 @@ screen.listen()
 while True:
     screen.update()
 
-    # Sprawdzenie czy nie dotyka granicy
+
     if snake.xcor()>290 or snake.xcor()<-290 or snake.ycor()>290 or snake.ycor()<-290:
         time.sleep(1)
         snake.goto(0,0)
         snake.direction = "stop"
 
-        # Usunięcie segmentów poza pole gry
+
         for segment in segments:
             segment.goto(1000, 1000)
         
-        # Wyczyszczenie segmentów
+
         segments.clear()
 
-        # Reset wyniku
+
         score = 0
 
-        # Reset opóźnienia
+
         delay = 0.1
 
-        #reset wyników
+
         results.clear()
         results.write("Score: {}  High Score: {}".format(score, high_score), align="center", font=("Courier", 24, "bold")) 
 
 
-    # sprawdzanie czy dotyka jedzenia
+
     if snake.distance(food) < 20:
-        # przeniesienie jedzenia w losowe miejsce
+
         x = random.randint(-290, 290)
         y = random.randint(-290, 290)
         food.goto(x,y)
 
-        # dodanie segmentu
         new_segment = turtle.Turtle()
         new_segment.speed(0)
         new_segment.shape("square")
@@ -129,10 +128,10 @@ while True:
         new_segment.penup()
         segments.append(new_segment)
 
-        # uproszczenie kierowania wężem
+
         delay -= 0.001
 
-        # zwiekszenie wyniku
+
         score += 10
 
         if score > high_score:
@@ -141,13 +140,12 @@ while True:
         results.clear()
         results.write("Score: {}  High Score: {}".format(score, high_score), align="center", font=("Courier", 24, "bold")) 
 
-    # Przesuń najpierw segmenty końcowe w odwrotnej kolejności
     for index in range(len(segments)-1, 0,-1):
         x = segments[index-1].xcor()
         y = segments[index-1].ycor()
         segments[index].goto(x, y)
 
-    # Przesunąć segment 0 do miejsca, w którym znajduje się głowa
+
     if len(segments) > 0:
         x = snake.xcor()
         y = snake.ycor()
@@ -155,27 +153,27 @@ while True:
 
     move()    
 
-    # Check for head collision with the body segments
+
     for segment in segments:
         if segment.distance(snake) < 20:
             time.sleep(1)
             snake.goto(0,0)
             snake.direction = "stop"
         
-            # Hide the segments
+
             for segment in segments:
                 segment.goto(1000, 1000)
         
-            # Clear the segments list
+
             segments.clear()
 
-            # Reset the score
+
             score = 0
 
-            # Reset the delay
+
             delay = 0.1
         
-            # Update the score display
+
             results.clear()
             results.write("Score: {}  High Score: {}".format(score, high_score), align="center", font=("Courier", 24, "bold"))
 
